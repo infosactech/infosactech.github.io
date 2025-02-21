@@ -1,29 +1,52 @@
+name: CI/CD Pipeline
+
 on:
   push:
     branches:
-      - main # Change this to your default branch if it's different
+      - '**'  # Triggers on all branches
+    tags:
+      - '*'  # Triggers on all tags
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
-
+    container: node:15.12-alpine3.13
+    if: github.ref != 'refs/heads/main'  # Replace 'main' with your default branch if different
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 15 # Use Node.js 18 here
+      - name: Navigate to website directory
+        run: cd website
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
-      - name: Build site
-        run: npm run build
+      - name: Build project
+        run: yarn build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+  deploy:
+    runs-on: ubuntu-latest
+    container: node:15.12-alpine3.13
+    if: github.ref == 'refs/heads/main'  # Replace 'main' with your default branch if different
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Navigate to website directory
+        run: cd website
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build project
+        run: yarn build
+
+      - name: Move build artifacts
+        run: mv ./build ../public
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./website/docs # Change this if your build output directory is different
+          name: public
+          path: public
