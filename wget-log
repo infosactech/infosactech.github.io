@@ -1,0 +1,3 @@
+--2024-03-22 17:18:46--  https://gitlab.mtbank.by/api/v4/avatar?email=vkarpovich@mtbank.by
+Resolving gitlab.mtbank.by (gitlab.mtbank.by)... 93.125.98.75
+Connecting to gitlab.mtbank.by (gitlab.mtbank.by)|93.125.98.75|:443... failed: Connection refused.
