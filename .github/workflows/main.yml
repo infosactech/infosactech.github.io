@@ -20,7 +20,7 @@ jobs:
         run: cd website && yarn install
 
       - name: Build project
-        run: cd website && yarn build && mv ./build ../build
+        run: cd website && yarn build && mv ./build ../build && ls
 
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
