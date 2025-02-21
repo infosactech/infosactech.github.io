@@ -42,11 +42,8 @@ jobs:
       - name: Build project
         run: cd website && yarn build
 
-      - name: Move build artifacts
-        run: mv ./build ../public
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: public
-          path: public
+          name: build
+          path: website/build
