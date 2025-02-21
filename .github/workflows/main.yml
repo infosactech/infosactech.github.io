@@ -37,10 +37,10 @@ jobs:
         run: cd website
 
       - name: Install dependencies
-        run: yarn install
+        run: cd website && yarn install
 
       - name: Build project
-        run: yarn build
+        run: cd website && yarn build
 
       - name: Move build artifacts
         run: mv ./build ../public
